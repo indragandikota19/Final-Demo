@@ -1,0 +1,44 @@
+.boxes{
+    background: url("chef.avif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height:90vh;
+    overflow-x: hidden;
+    
+}
+#chef{
+    color:rebeccapurple;
+    font-size: 65px;
+    margin-left: 450px;
+}
+#one{
+    color:rgb(179, 9, 94);
+    font-size: larger;
+    margin-left: 600px;
+    margin-bottom: 15px;
+}
+#username{
+    margin-left: 600px !important;
+    width: 450px;
+    margin-bottom: 10px;
+}
+#password{
+    margin-left: 600px !important;
+    width: 450px;
+    margin-bottom: 10px;
+}
+
+.btn-chef{
+    margin-left: 780px;
+    
+    background-color:rebeccapurple ;
+    color:white;
+    
+}
+#first{
+    color:rgb(179, 9, 94);
+    font-size: larger;
+    margin-left: 600px;
+    margin-bottom: 15px;
+    margin-top: 60px;
+}

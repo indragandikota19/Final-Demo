@@ -1,0 +1,32 @@
+.navbar {
+    color: rgb(73, 7, 73);
+  }
+  
+  .bg-primary {
+    --bs-bg-opacity: 1;
+    background-color: rgb(41, 41, 87) !important;
+  }
+  
+  .ml-auto {
+    margin-left: auto;
+    display: flex; /* Ensure items are displayed in a row */
+    align-items: center; /* Vertically center items */
+  }
+  
+  .nav-link {
+    color: rgb(221, 212, 212); /* Link text color */
+    padding: 0 15px; /* Spacing around text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Ensure links are inline */
+  }
+  
+  .nav-link:hover {
+    color: white; /* Ensure link color remains white on hover */
+    text-decoration: none; /* Remove underline on hover */
+  }
+  
+  .nav-link.active {
+    color: white /* Change to a darker color for the active link */
+
+  }
+  

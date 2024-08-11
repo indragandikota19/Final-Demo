@@ -1,0 +1,84 @@
+/* Global Styles */
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    width: 100%; /* Ensure body does not exceed viewport width */
+    background-color: white;
+}
+
+/* Last Section */
+.last {
+    height: 90vh;
+    overflow: hidden; /* Hide any overflow */
+    background-color: aliceblue;
+    width: 100%; /* Ensure it doesn't exceed viewport width */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Image Styling */
+.last img {
+    height: 300px;
+    width: 300px;
+    mix-blend-mode: multiply;
+    margin-bottom: 20px; /* Space between image and text/button */
+}
+
+/* Text with Gradient Background */
+#od {
+    font-weight: bold;
+    font-size: 50px;
+    background: repeating-linear-gradient(rgb(21, 135, 61), rgb(24, 95, 17), rgb(22, 140, 77));
+    color: transparent;
+    background-position: center;
+    -webkit-background-clip: text;
+    display: inline-block; /* Ensure the text block doesn’t cause overflow */
+    text-align: center; /* Center the text */
+    margin: 20px 0; /* Space above and below text */
+}
+
+/* Feed Button */
+#feed {
+    width: 200px;
+    height: 50px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 30px;
+    background-color: rgb(104, 104, 69);
+    color: white; /* Default text color */
+    display: inline-block; /* Ensure button doesn’t cause overflow */
+    text-align: center; /* Center the text */
+    margin-bottom: 20px; /* Space below button */
+}
+
+#feed:hover {
+    transition: 1s;
+    transform: scale(1.1); /* Scale up button on hover */
+    background-color: rgb(104, 104, 69);
+    cursor: pointer;
+    color: hotpink;
+    background: none;
+}
+
+/* Status Section */
+#status {
+    width: 100%; /* Ensure it fits within viewport width */
+    height: auto; /* Adjust height automatically */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#status h2 {
+    margin: 0;
+    padding: 20px 0;
+}
+
+#status h5 {
+    font-size: 30px;
+    color: green;
+}

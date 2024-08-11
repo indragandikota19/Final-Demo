@@ -1,0 +1,97 @@
+.nav-link {
+  color: white; /* Default color for all links */
+  padding: 0 15px; /* Consistent padding for spacing */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Ensure links are inline */
+}
+
+.nav-link:hover {
+  color: white; /* Hover color remains white */
+  text-decoration: none; /* No underline on hover */
+}
+
+.nav-link.active {
+  color: #cccccc; /* Darker color for the active link */
+  font-weight: bold; /* Bold text for the active link */
+}
+
+/* Specific styles for chef and admin links */
+.chef,
+.admin {
+  color: rgb(122, 185, 243); /* Green color for Chef and Admin links */
+  margin-left: 50px;
+  margin-top: 10px;
+  font-weight: bolder;
+}
+
+.chef:hover,
+.admin:hover {
+  color: white; /* Darker green on hover */
+}
+
+.chef.active,
+.admin.active {
+  color: #155724; /* Even darker green for active links */
+}
+
+.col-sm-3{
+  margin-left: 100px;
+  color: rgb(122, 185, 243);
+}
+
+#login{
+  margin-left: 110px;
+  margin-bottom: 20px;
+  background-color: rgb(27, 118, 202);
+}
+
+.form1-control {
+  margin-left: 42px;
+  width: 50%;
+  background-color:#ece9e9;
+}
+
+.form2-control {
+  margin-left: 10px;
+  width: 50%;
+  background-color:#ece9e9;
+}
+
+.form-label{
+  margin-left: 80px;
+  color: white;
+  font-weight: lighter;
+}
+
+.round {
+  background-image: url('loginimg.webp'); /* Path to your background image */
+  background-size: cover; /* Cover the entire container */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  min-height: 100vh; /* Make sure it covers the entire viewport height */
+}
+
+.containers {
+  background: transparent; /* Optional: Add a semi-transparent background */
+  padding: 20px; /* Adjust padding as needed */
+  /* Rounded corners for a better look */
+}
+
+.card{
+  background-color: transparent;
+  border-color: transparent;
+}
+.shadow {
+  box-shadow: 0 .5rem 1rem transparent !important;
+}
+
+
+.text1-success{
+  color: rgb(122, 185, 243);
+  border-bottom: 0 !important;
+}
+
+.text-success {
+  font-weight: lighter !important;
+  color: white !important;
+}

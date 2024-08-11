@@ -1,0 +1,68 @@
+.registers {
+  width: auto;
+  height: 100vh;
+  border: 5px solid black;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow-y: hidden;
+}
+
+.form {
+  opacity: 1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url('register.avif');
+}
+
+h1.register {
+  color: rgb(7, 74, 128);
+  margin-left: 600px;
+  margin-bottom: 20px; /* Add some margin below the title */
+}
+
+label {
+  font-weight: bold;
+}
+
+.form-outline {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px; /* Space between form fields */
+}
+
+.form-outline label {
+  flex: 0 0 150px; /* Fixed width for labels */
+  margin-right: 20px; /* Space between label and input */
+}
+
+.form-outline input {
+  flex: 1; /* Input takes remaining space */
+  width: 100%; /* Ensure input field occupies full width */
+}
+
+.align-right {
+  text-align: right;
+}
+
+.form-control {
+  width: 100%;
+  margin-left: 0px !important;
+}
+
+#form3Example1c,
+#form3Example2c,
+#form3Example3c,
+#form3Example4c,
+#form3Example5c {
+  width: 100%;
+}
+
+body {
+  overflow-y: hidden;
+}
+
+.btn-primary1 {
+  background-color: #0dcaf0 !important;
+  color: black;
+  margin-left: 0 !important;
+}
