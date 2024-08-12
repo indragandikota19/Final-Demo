@@ -10,13 +10,12 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background: #fff;
   padding: 20px;
   border-radius: 10px;
@@ -24,7 +23,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .product {
@@ -60,7 +58,7 @@ button.disabled {
 }
 
 #card:hover {
-  box-shadow: 10px 10px 10px 10px rgba(22, 22, 22, 0.1);
+  box-shadow: 10px 10px 10px rgba(22, 22, 22, 0.1);
   transition: .3s;
 }
 
@@ -69,12 +67,12 @@ button.disabled {
 }
 
 #bbb {
-  /* border: 5px solid black;
-     margin-left: 50px; */
+  /* Uncomment and customize as needed
+  border: 5px solid black;
+  margin-left: 50px; */
 }
 
 #bb1 {
-  /* border:5px; */
   border-radius: 15px;
 }
 
@@ -90,7 +88,7 @@ button.disabled {
 
 #select {
   text-decoration: none;
-  border: strong;
+  border: solid 1px #ccc; /* Changed to solid for better visibility */
 }
 
 .pay {
@@ -107,77 +105,132 @@ button.disabled {
   padding: 20px;
 }
 
-.search-bar {
-  margin: 20px 0;
+.view-cart-container {
+  display: flex; /* Use flexbox for alignment */
+  justify-content: flex-end; /* Aligns items to the right */
+  margin-bottom: 20px; /* Space below the button */
 }
 
-/* Updated styles for the Item component */
-
-.items-container {
+.food-items-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  flex-wrap: wrap; /* Allows wrapping to the next row if items exceed the container width */
+  gap: 20px; /* Space between food items */
   justify-content: center; /* Center align items horizontally */
 }
 
-.item {
+.food-item {
   border: 1px solid #ddd;
   padding: 15px;
   border-radius: 5px;
   text-align: center;
-  width: calc(25% - 20px); /* Adjust width to fit 4 items per row with some margin */
-  max-width: 300px; /* Limit the maximum width of each item */
+  width: 300px; /* Adjust the width as needed */
   box-sizing: border-box;
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.item:hover {
+.food-item:hover {
   transform: scale(1.05); /* Slightly enlarge the item on hover */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.item-image {
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
-}
-
-.item-name {
-  margin: 10px 0;
-  font-size: 16px; /* Slightly smaller font size */
-}
-
-.item-quantity {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+.quantity-controls {
   margin: 10px 0;
 }
 
-.quantity-btn {
-  background: #007bff;
+.quantity-controls button {
+  padding: 5px 10px;
+  margin: 0 5px;
+  background: #007bff; /* Button background color */
   color: white;
   border: none;
-  padding: 5px 8px; /* Slightly smaller padding */
   border-radius: 5px;
   cursor: pointer;
 }
 
-.quantity-display {
-  font-size: 14px; /* Slightly smaller font size */
+.quantity-controls button:hover {
+  background: #0056b3; /* Darker button color on hover */
+}
+
+.quantity-controls span {
+  font-size: 18px;
 }
 
 .add-to-cart-btn {
   background: #28a745;
   color: white;
   border: none;
-  padding: 10px; /* Slightly smaller padding */
+  padding: 10px;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 10px;
 }
 
-.text-end {
-  text-align: right;
+.add-to-cart-btn:hover {
+  background: #218838; /* Darker green on hover */
 }
+
+.table {
+  margin-top: 20px;
+}
+
+.cart-container {
+  padding: 20px;
+  background: url("food.avif");
+  
+    background-repeat: no-repeat;
+    background-size: cover;
+    height:90vh;
+    width:230.8vh;
+    overflow-x: hidden;
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.pricing-details {
+  flex: 1;
+  margin-right: 20px;
+  margin-left: 100px;
+  margin-top: 30px;
+  color: black;
+  font-weight: bolder;
+}
+
+.payment-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 500px;
+  margin-top: 30px;
+  color: black;
+  font-weight: bolder;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  text-align: center;
+}
+
+.btn-address{
+  color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+    margin-left: 370px;
+    
+}
+
+.btn-back{
+  color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+    margin-top: 0 !important;
+}
+
+.para{
+  margin-bottom: 5px;
+}
+

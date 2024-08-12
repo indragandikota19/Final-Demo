@@ -1,51 +1,26 @@
-
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import"./Styles.css";
-import { Hidden } from "@mui/material";
+import "./Styles.css";
 
 function Cart() {
-  const [lists, setLists] = useState([]);
   const [cart, setCart] = useState([]);
-  const [selects, setSelects] = useState();
   const [quantities, setQuantities] = useState([]);
-  
+
   let navigate = useNavigate();
 
   useEffect(() => {
-    loadLists();
+    const loadCart = () => {
+      const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
+      setCart(savedCart);
+
+      // Initialize quantities based on saved cart
+      const initialQuantities = savedCart.map(item => item.quantity || 1);
+      setQuantities(initialQuantities);
+    };
+
+    loadCart();
   }, []);
-
-  const loadLists = async () => {
-    const result = await axios.get("http://localhost:8080/addres");
-    setLists(result.data); 
-  };
-
-  const deleteItem = async (id) => {
-    await axios.delete(`http://localhost:8080/address/${id}`);
-    loadLists();
-  };
-
-  const removeItem = async (id) => {
-    await axios.delete(`http://localhost:8080/history/${id}`);
-    loadList();
-  };
-
-  useEffect(() => {
-    loadList();
-  }, []);
-
-  const loadList = async () => {
-    const result = await axios.get("http://localhost:8080/history");
-    setCart(result.data); 
-  };
-
-  useEffect(() => {
-    setQuantities(Array(cart.length).fill(1));
-  }, [cart]);
 
   const updateQuantity = (index, quantity) => {
     const newQuantities = [...quantities];
@@ -53,29 +28,25 @@ function Cart() {
     setQuantities(newQuantities);
   };
 
-  const getTotalAmount = (item) => {
-    const index = cart.indexOf(item);
-    const quantity = quantities[index];
-    return item.price * quantity;
+  const getSubtotalAmount = () => {
+    return cart.reduce((total, item, index) => total + (item.price * quantities[index]), 0);
+  };
+
+  const getGSTAmount = (subtotal) => {
+    const gstPercentage = 10; // GST percentage changed to 10%
+    return (subtotal * gstPercentage) / 100;
   };
 
   const getTotalPrice = () => {
-    let total = 50;
-    cart.forEach((item, index) => {
-      total += item.price * quantities[index];
-    });
-    return total;
-  };
-
-  const getTotalShipping = () => {
-    let charge = 50;
-    return charge;
+    const subtotal = getSubtotalAmount();
+    const gstAmount = getGSTAmount(subtotal);
+    const shippingCharge = 50; // Initial shipping charge or base amount
+    return subtotal + gstAmount + shippingCharge;
   };
 
   const onClick = async (e) => {
     Swal.fire({
       title: 'Click OK to confirm order',
-      text: "",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -88,74 +59,88 @@ function Cart() {
     });
   };
 
+  const removeItem = (index) => {
+    const updatedCart = cart.filter((_, i) => i !== index);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    setCart(updatedCart);
+  };
+
+  const subtotal = getSubtotalAmount();
+  const gstAmount = getGSTAmount(subtotal);
+  const shippingCharge = 50;
+  const totalPrice = subtotal + gstAmount + shippingCharge;
+
   return (
-    <div className="mt-0 pt-2">
-      <div className="row"> 
+    <div className="cart-container">
+      <div className="row">
         <div className="col-md-3">
-          <a style={{marginLeft:"250px",marginTop:"20px"}} href="/menu" className="btn btn-success">Back</a>
+          <p>Want to add more items?</p>
+          <a style={{ marginTop: "20px" }} href="/menu" className="btn btn-back">Back</a>
         </div>
         <div className="col-md-3">
-          <a style={{marginLeft:"650px",marginTop:"20px"}} href="/address" className="btn btn-success">Address</a>
+          <a style={{ marginTop: "20px" }} href="/address" className="btn btn-address">Address</a>
         </div>
-      </div>  
-      <table className="table table-striped table-light mt-5"style={{marginLeft:"500px", borderStyle:"hidden"}}>
-        
+      </div>
+
+      
+
+      <table className="table mt-5" style={{width:"800px", marginLeft:"50px"}}>
+        <thead>
+          <tr style={{color:"blue"}}>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
         <tbody>
           {cart.map((item, index) => (
-            <tr key={index}>
-              <td><img src={item.images} style={{ height: "100px", width:"100px" }} alt="menu item" /></td>
-              <td>{item.name}</td>
-              <td>Rs.{item.price}</td>
+            <tr key={item.id}>
+              <td><b>{item.name}</b></td>
               <td>
-                <input type="number" value={quantities[index]} min="1" max="15" onChange={(e) => updateQuantity(index, e.target.value)} />
+                <input
+                  type="number"
+                  value={quantities[index]}
+                  min="1"
+                  onChange={(e) => updateQuantity(index, Number(e.target.value))}
+                />
               </td>
-              <td>Rs.{getTotalAmount(item)}</td>
+              <td><b>₹{item.price * quantities[index]}</b></td>
               <td>
-                <button className="btn btn-warning" onClick={() => removeItem(item.id)}>Remove</button>
+                <button className="btn btn-danger mx-2" onClick={() => removeItem(index)} style={{padding:"1px", paddingLeft:"5px", paddingRight:"5px"}}>✖</button>
               </td>
             </tr>
           ))}
         </tbody>
-        
-          
-            <p style={{borderTop:"hidden",marginBottom:"5px",marginTop:"30px"}}>
-              GST and restaurant charges: Rs.{getTotalShipping()}
-            </p>
-            
-          
-          
-            <p style={{borderTop:"hidden",marginBottom:"0px",fontSize:"25px",color:"indigo"}}>
-              Grand Total: Rs.{getTotalPrice()}
-            </p>
-            
-          
       </table>
-      <hr style={{width:"350px",marginLeft:"500px"}}></hr>
-      <div className="col-md-3" style={{marginLeft:"500px"}}>
-        
-        <h4 style={{marginBottom:"15px"}}className="pay">PAY USING</h4>
-        <select value={selects} onChange={e => setSelects(e.target.value)} id="select">
-          <option>Choose Payment</option>
-          <option>Cash on Delivery</option>
-        </select>
-        <br></br>
 
-        <button style={{marginTop:"15px",backgroundColor:"green"}}onClick={onClick} className="btn btn-danger">Place Order ₹{getTotalPrice()}</button>
+      <div className="content-wrapper">
+        <div className="pricing-details">
+          <h4 className="pay" style={{color:"blue"}}><b>PRICE DETAILS</b></h4>
+          <p className="para">Subtotal: ₹{subtotal}</p>
+          <p className="para">GST (10%): ₹{gstAmount.toFixed(2)}</p>
+          <p className="para">Shipping Charge: ₹{shippingCharge}</p>
+          <hr style={{width:"300px", border: "none",
+            height: "3px", 
+            backgroundColor: "black"}}/>
+          <h4><b>Total Price: ₹{totalPrice.toFixed(2)}</b></h4>
+        </div>
+
+        <div className="payment-section">
+          <h4 className="pay" style={{color:"blue"}}><b>PAY USING</b></h4>
+          <select id="select">
+            <option>Cash on Delivery</option>
+            <option>UPI ID</option>
+            <option>Debit Card</option>
+            <option>Credit Card</option>
+          </select>
+          <br />
+          <button style={{ marginTop: "15px", backgroundColor: "green", padding:"10px"}} onClick={onClick} className="btn btn-danger">
+            Place Order ₹{totalPrice.toFixed(2)}
+          </button>
+        </div>
       </div>
-      <table className="table mt-5">
-        
-        <tbody>
-          {lists.map((list, index) => (
-            <tr key={index}>
-              <td style={{ gap: "50px" }}>📍 {list.name}, {list.address}, {list.phone}, {list.pincode}</td>
-              <td>
-                <Link className="btn btn-outline-primary mx-2" to={`/editaddress/${list.id}`}>✎</Link>
-                <button className="btn btn-danger mx-2" onClick={() => deleteItem(list.id)}>✖</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
-import { FaUser, FaEnvelope, FaLock, FaPhone } from 'react-icons/fa';
+import { Link, useNavigate } from "react-router-dom";
+import { FaUser, FaEnvelope, FaLock, FaPhone, FaCheck, FaTimes } from 'react-icons/fa'; // Add FaTimes for the red X mark
 import axios from "axios";
 import "./Registration.css";
 
@@ -11,14 +11,17 @@ export default function RegistrationForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [passwordsMatch, setPasswordsMatch] = useState(false); // State to track password match
+  const [passwordsMismatch, setPasswordsMismatch] = useState(false); // State to track password mismatch
+  const navigate = useNavigate();
 
   const handleSave = (e) => {
     e.preventDefault();
     const data = {
-      name: name,
-      phone: phone,
-      email: email,
-      password: password,
+      name,
+      phone,
+      email,
+      password,
     };
 
     const validationErrors = validate(data);
@@ -34,10 +37,26 @@ export default function RegistrationForm() {
       .then((result) => {
         clear();
         alert("Successfully registered");
+        navigate("/logins");
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    validatePasswords(e.target.value, confirmPassword);
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+    validatePasswords(password, e.target.value);
+  };
+
+  const validatePasswords = (password, confirmPassword) => {
+    setPasswordsMatch(password === confirmPassword);
+    setPasswordsMismatch(password !== confirmPassword && confirmPassword !== "");
   };
 
   const clear = () => {
@@ -46,6 +65,8 @@ export default function RegistrationForm() {
     setPhone("");
     setPassword("");
     setConfirmPassword("");
+    setPasswordsMatch(false);
+    setPasswordsMismatch(false);
   };
 
   function validate(data) {
@@ -148,7 +169,7 @@ export default function RegistrationForm() {
                                   type="password"
                                   id="form3Example4c"
                                   className="form-controls"
-                                  onChange={(e) => setPassword(e.target.value)}
+                                  onChange={handlePasswordChange}
                                   value={password}
                                   placeholder="Password"
                                 />
@@ -161,10 +182,12 @@ export default function RegistrationForm() {
                                   type="password"
                                   id="form3Example5c"
                                   className="form-controls"
-                                  onChange={(e) => setConfirmPassword(e.target.value)}
+                                  onChange={handleConfirmPasswordChange}
                                   value={confirmPassword}
                                   placeholder="Confirm Password"
                                 />
+                                {passwordsMatch && <FaCheck className="password-check match" />} {/* Display tick mark if passwords match */}
+                                {passwordsMismatch && <FaTimes className="password-check mismatch" />} {/* Display X mark if passwords do not match */}
                               </div>
                             </div>
                             <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">

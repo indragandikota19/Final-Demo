@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./Styles.css";  // Ensure this import points to your CSS file
+import "./Styles.css";
 
 function Menu() {
   const [userData, setUserData] = useState([]);
-  const [filterData, setFilterData] = useState([]);
-  const [query, setQuery] = useState('');
+  const [quantities, setQuantities] = useState({});
 
   useEffect(() => {
     const getUserData = async () => {
@@ -13,72 +12,63 @@ function Menu() {
       const resData = await reqData.json();
 
       setUserData(resData);
-      setFilterData(resData);
+
+      const initialQuantities = {};
+      resData.forEach(item => {
+        initialQuantities[item.id] = 1;
+      });
+      setQuantities(initialQuantities);
     }
     getUserData();
   }, []);
 
-  const handleSearch = (event) => {
-    const getSearch = event.target.value;
-    if (getSearch.length > 0) {
-      const searchData = filterData.filter((item) => item.name.toLowerCase().includes(getSearch.toLowerCase()));
-      setUserData(searchData);
-    } else {
-      setUserData(filterData);
+  const handleQuantityChange = (id, delta) => {
+    setQuantities(prevQuantities => ({
+      ...prevQuantities,
+      [id]: Math.max(1, (prevQuantities[id] || 1) + delta)
+    }));
+  };
+
+  const addToCart = (item) => {
+    const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
+    const itemIndex = existingCart.findIndex(cartItem => cartItem.id === item.id);
+
+    if (itemIndex > -1) {
+      alert('Product already in the cart');
+      return;
     }
-    setQuery(getSearch);
-  }
 
-  const addToCart = async (item) => {
-    try {
-      const cartResponse = await fetch('http://localhost:8080/history');
-      if (!cartResponse.ok) {
-        throw new Error('Failed to fetch cart data');
-      }
-      const cartItems = await cartResponse.json();
-      const existingItem = cartItems.find((cartItem) => cartItem.name === item.name);
-
-      if (existingItem) {
-        alert('Product already in the cart');
-        return;
-      }
-      const response = await fetch('http://localhost:8080/history', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(item),
-      });
-
-      if (response.ok) {
-        alert('Product added to the cart');
-      } else {
-        console.error('Failed to add product to the cart:', response.statusText);
-        alert('Failed to add product to the cart');
-      }
-    } catch (error) {
-      console.error('Error adding product to the cart:', error);
-      alert('Error adding product to the cart');
-    }
+    const updatedCart = [...existingCart, { ...item, quantity: quantities[item.id] }];
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    alert('Product added to the cart');
   };
 
   return (
     <div className="menu-container">
-      <div className="row">
-        <div className="col-md-3" style={{ marginLeft: "450px", marginTop: "50px", marginBottom: "0px", padding: "150px", paddingRight: "250px", backgroundColor: "#cedfef" }}>
-          <Link
-            className="btn btn-outline-primary mx-4 mt-2"
-            to={`/cart`}
-          >
-            View Cart
-          </Link>
-          
-        </div>
+      <div className="view-cart-container">
+        <Link
+          className="btn btn-outline-primary mx-4 mt-2"
+          to={`/cart`}
+        >
+          View Cart
+        </Link>
       </div>
-      
-      
-        
-      
+      <div className="food-items-container">
+        {userData.map(item => (
+          <div key={item.id} className="food-item">
+            <h5>{item.name}</h5>
+            <p>{item.description}</p>
+            <div className="quantity-controls">
+              <button onClick={() => handleQuantityChange(item.id, -1)}>-</button>
+              <span>{quantities[item.id]}</span>
+              <button onClick={() => handleQuantityChange(item.id, 1)}>+</button>
+            </div>
+            <button onClick={() => addToCart(item)}>
+              Add to Cart
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

@@ -66,3 +66,24 @@ body {
   color: black;
   margin-left: 0 !important;
 }
+
+.form-outline {
+  position: relative;
+}
+
+.password-check {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px; /* Adjust size as needed */
+}
+
+.password-check.match {
+  color: green;
+}
+
+.password-check.mismatch {
+  color: red;
+}
+
