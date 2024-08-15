@@ -6,7 +6,7 @@ export default function AdminDashboard() {
     return(
       
 <div className="dash4">
-        <div id="dashboard">
+        <div id="dashboard" style={{backgroundColor:"lightblue", Width:"1500px", maxHeight:"100%"}}>
             <h1 style={{ color:"hotpink",marginLeft:"500px",marginTop:"50px",marginBottom:"50px" }}>Admin DashBoard</h1>
             <div id="dash6">
             <div className="dash1"style={{marginLeft:"300px"}}>

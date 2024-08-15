@@ -100,8 +100,9 @@ button.disabled {
 }
 
 .menu-container {
-  max-height: 80vh; /* Adjust the height as needed */
+  max-height: 100vh; /* Adjust the height as needed */
   overflow-y: auto;
+  background-color: lightblue;
   padding: 20px;
 }
 
@@ -119,7 +120,7 @@ button.disabled {
 }
 
 .food-item {
-  border: 1px solid #ddd;
+  border: 0.5px solid rgba(52, 112, 136, 0.918);
   padding: 15px;
   border-radius: 5px;
   text-align: center;

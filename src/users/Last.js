@@ -20,7 +20,7 @@ const Last = () => {
 
   return (
     <div className="last">
-      <img src='https://media.tenor.com/PYQdx807FXAAAAAC/sucess-transparent.gif' alt="Order Successful" />
+      <img src="/tick.jpg" alt="Order Successful" />
       <h5 id="od">Order Placed Successfully.....</h5>
       <button onClick={onClick} id="feed">FeedBack</button>
       <div id="status">

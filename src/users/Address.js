@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function AddMenu() {
   let navigate = useNavigate();
@@ -103,9 +104,12 @@ export default function AddMenu() {
             <button type="submit" className="btn btn-outline-primary" style={{marginLeft:"250px"}}>
               Submit
             </button>
-            <button type="button" className="btn btn-outline-danger mx-2" onClick={onCancel}>
-              Cancel
-            </button>
+            <Link
+          className="btn btn-outline-primary mx-4 mt-2"
+          to={`/cart`}
+        >
+          Cancel
+        </Link>
           </form>
         </div>
       </div>
