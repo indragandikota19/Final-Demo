@@ -30,3 +30,37 @@
 
   }
   
+
+  /* Ensure dropdown menu appears below and is aligned to the end */
+.dropdown-menu {
+  min-width: 70px;
+}
+
+.dropdown-menu-end {
+  right: 0;
+  left: auto;
+}
+
+/* Smooth transition for dropdown appearance */
+.dropdown-menu.show {
+  display: block;
+  transition: opacity 0.3s ease;
+}
+
+/* Improve the button styling for better visibility */
+.nav-link.dropdown-toggle {
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+/* Add some spacing for the dropdown items */
+.dropdown-item {
+  padding: 0 !important;
+  padding-left: 5px !important;
+}
+
+/* Change the color of the dropdown item on hover */
+.dropdown-item:hover {
+  background-color: #007bff;
+  color: #fff;
+}
